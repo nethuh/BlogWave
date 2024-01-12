@@ -40,6 +40,16 @@ const Home = () => {
               ))}
             </div>
           </div>
+
+          {/* Blog Post */}
+          <div className='w-full flex flex-col md:flex-row gap-10 2xl:gap-20'>
+            {/* LEFT */}
+            <div className='w-full md:w-2/3 flex flex-col gap-y-28 md:gap-y-14'>
+              {posts?.map((post,index) => (
+                  <Card key={post?._id} post={post} index={index} />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
   );
