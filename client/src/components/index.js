@@ -4,6 +4,7 @@ import Button from "./Button";
 import Divider from "./Divider";
 import Inputbox from "./Inputbox";
 import Banner from "./Banner"
+import Card from "./Card"
 export {
-    Button, Loading,Logo, Divider,Inputbox,Banner
+    Button, Loading,Logo, Divider,Inputbox,Banner,Card
 };
