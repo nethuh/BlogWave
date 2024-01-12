@@ -13,7 +13,24 @@ const Banner = ({ post }) => {
 
                 <div className="absolute flex flex-col md:right-10
                 bottom-10 md:bottom-2 w-full md:w-2/4 lg:w-1/3 2xl:w-[480px]
-                bg-white dark:bg-[[#05132b] shadow-2xl p-5 rounded-lg gap-3"></div>
+                bg-white dark:bg-[[#05132b] shadow-2xl p-5 rounded-lg gap-3">
+                    <Link to={`/${post?.slug}/${post?._id}`}>
+                        <h1 className='font-semibold text-2xl text-black dark:text-white'>
+                            {post?.title.slice(0, 60) + "..."}
+                        </h1>
+                    </Link>
+                    <div className="flex-1 overflow-hidden text-gray-600 dark:text-slate-500 text-sm text-justify">
+                        <Markdown options={{ wrapper: "article" }}>
+                            {post?.desc?.slice(0, 160) + "..."}
+                        </Markdown>
+                    </div>
+                    <Link
+                        to={`/${post?.slug}/${post?._id}`}
+                        className='w-fit bg-rose-600 bg-opacity-20 text-rose-700 px-4 py-1 rounded-full text-sm cursor-pointer '
+                    >
+                        Read more...
+                    </Link>
+                </div>
             </div>
         </div>
     );
