@@ -1,5 +1,6 @@
-import { posts } from "../utils/dummyData";
+import { CATEGORIES, popular, posts } from "../utils/dummyData";
 import {useState} from "react";
+import { Link } from "react-router-dom";
 import {Banner} from "../components"
 
 const Home = () => {
@@ -27,11 +28,20 @@ const Home = () => {
               Popular Categories
             </p>
             <div className='w-full flex flex-wrap py-10 gap-8'>
-
+              {CATEGORIES.map((cat) => (
+                  <Link
+                      to={`/category?cat=${cat?.label}`}
+                      className={`flex items-center justify-center gap-3 ${cat.color} text-white font-semibold text-base px-4 py-2 rounded cursor-pointer`}
+                      key={cat.label}
+                  >
+                    {cat?.icon}
+                    <span>{cat.label}</span>
+                  </Link>
+              ))}
             </div>
           </div>
         </div>
-  </div>
+      </div>
   );
 };
 
