@@ -3,6 +3,7 @@ import Logo from "./Logo";
 import Button from "./Button";
 import Divider from "./Divider";
 import Inputbox from "./Inputbox";
+import Banner from "./Banner"
 export {
-    Button, Loading,Logo, Divider,Inputbox
+    Button, Loading,Logo, Divider,Inputbox,Banner
 };
