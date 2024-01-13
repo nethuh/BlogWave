@@ -16,6 +16,27 @@ const Card = ({ post, index }) => {
                 className='object-cover w-full h-full rounded'
                 />
             </Link>
+
+            <div className='w-full md:w-2/4 flex flex-col gap-3'>
+                <div className='flex gap-2'>
+                    <span className='text-sm text-gray-600'>
+                        {new  Date(post?.createdAt).toDateString()}
+                    </span>
+                    <span className='text-sm text-rose-600 font-semibold'>
+                        {post?.cat}
+                    </span>
+                </div>
+
+                <h6 className='text-xl 2xl:text-3xl font-semibold text-black dark:text-white'>
+                    {post?.title}
+                </h6>
+
+                <div className='flex-1 overflow-hidden text-gray-600 dark:text-slate-500 text-sm text-justify'>
+                    <Markdown options={{ wrapper: "article"}}>
+                        {post?.desc?.slice(0,250)+"..."}
+                    </Markdown>
+                </div>
+            </div>
         </div>
     );
 };
