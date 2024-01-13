@@ -6,7 +6,6 @@ import {Banner, Card, Pagination, PopularWriters,PopularPosts} from "../componen
 const Home = () => {
     const numOfPages = 4;
     const [page, setPage] = useState(0);
-
     const randomIndex = Math.floor(Math.random() * posts.length);
 
     const handlePageChange = (val) => {
@@ -51,7 +50,7 @@ const Home = () => {
                     {/* LEFT */}
                     <div className='w-full md:w-2/3 flex flex-col gap-y-28 md:gap-y-14'>
                         {posts?.map((post, index) => (
-                            <Card key={post?._id} post={post} index={index}/>
+                            <Card key={post?._id} post={post} index={index} />
                         ))}
 
                         <div className='w-full flex items-center justify-center'>
@@ -61,12 +60,14 @@ const Home = () => {
                             />
                         </div>
                     </div>
+
+                    {/* RIGHT */}
                     <div className='w-full md:w-1/4 flex flex-col gap-y-12'>
                         {/* POPULAR POSTS */}
                         <PopularPosts posts={popular?.posts}/>
 
                         {/* POPULAR WRITERS */}
-                        <PopularWriters data={popular?.writers}/>
+                        <PopularWriters data={popular?.writers} />
                     </div>
                 </div>
             </div>
