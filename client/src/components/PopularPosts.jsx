@@ -9,3 +9,5 @@ const PopularPosts = ({ posts }) => {
         </div>
     );
 };
+
+export default PopularPosts;
