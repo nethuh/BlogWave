@@ -48,8 +48,12 @@ const Pagination = ({ totalPages, onPageChange }) => {
                 </>
             )}
 
-            <button>
-
+            <button
+                className='pagination-btn'
+                onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
+                disabled={currentPage === totalPages}
+            >
+                Next
             </button>
         </div>
     );
