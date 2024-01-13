@@ -36,6 +36,12 @@ const Card = ({ post, index }) => {
                         {post?.desc?.slice(0,250)+"..."}
                     </Markdown>
                 </div>
+
+                <Link to={`/${post?.slug}/${post._id}`}
+                      className='flex items-center gap-2 text-black dark:text-white'
+                >
+                    <span className='underline'>Read More</span> <AiOutlineArrowRight />
+                </Link>
             </div>
         </div>
     );
