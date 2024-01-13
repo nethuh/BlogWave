@@ -23,6 +23,18 @@ const Pagination = ({ totalPages, onPageChange }) => {
                     <span className='pagination-ellipsis'>...</span>
                 </>
             )}
+
+            {range(
+                Math.max(1, currentPage -3),
+                Math.min(totalPages, currentPage + 4)
+            ).map((page) => (
+                <button
+                    key={page}
+                    className={`pagination-btn ${page === currentPage ? "active" : ""}`}
+                    onClick={() => onPageChange(page)}>
+                    {page}
+                </button>
+            ))}
         </div>
     );
 };
