@@ -5,6 +5,7 @@ import Divider from "./Divider";
 import Inputbox from "./Inputbox";
 import Banner from "./Banner"
 import Card from "./Card"
+import Pagination from "./Pagination";
 export {
-    Button, Loading,Logo, Divider,Inputbox,Banner,Card
+    Button, Loading,Logo, Divider,Inputbox,Banner,Card,Pagination
 };

@@ -1,7 +1,7 @@
 import { CATEGORIES, popular, posts } from "../utils/dummyData";
 import {useState} from "react";
 import { Link } from "react-router-dom";
-import {Banner , Card} from "../components"
+import {Banner , Card , Pagination} from "../components"
 
 const Home = () => {
   const numOfPages = 4;
