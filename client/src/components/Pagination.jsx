@@ -35,6 +35,22 @@ const Pagination = ({ totalPages, onPageChange }) => {
                     {page}
                 </button>
             ))}
+
+            {showEllipses && currentPage < totalPages -3 && (
+                <>
+                <span className='pagination-ellipsis'>...</span>
+                    <button
+                        className='pagination-btn'
+                        onClick={() => onPageChange(totalPages)}
+                        >
+                        {totalPages}
+                    </button>
+                </>
+            )}
+
+            <button>
+
+            </button>
         </div>
     );
 };
