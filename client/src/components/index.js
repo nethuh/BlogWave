@@ -6,6 +6,7 @@ import Inputbox from "./Inputbox";
 import Banner from "./Banner"
 import Card from "./Card"
 import Pagination from "./Pagination";
+import PopularWriters from "./PopularWriters";
 export {
-    Button, Loading,Logo, Divider,Inputbox,Banner,Card,Pagination
+    Button, Loading,Logo, Divider,Inputbox,Banner,Card,Pagination, PopularWriters
 };
