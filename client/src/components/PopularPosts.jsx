@@ -43,10 +43,16 @@ const PopularPosts = ({posts}) => {
     };
 
     return(
-        <div>
+        <div className='w-full flex flex-col gap-8'>
+            <p className='text-xl font-bold -mb-3 text-gray-600 dark:text-slate-500'>
+                Popular Articles
+            </p>
+            {posts?.map((post, id) => (
+                <Card post={post} key = {id} />
+            ))}
 
         </div>
-    )
+    );
 };
 
 export default PopularPosts;
