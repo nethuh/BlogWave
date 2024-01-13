@@ -9,6 +9,11 @@ const Home = () => {
 
   const randomIndex = Math.floor(Math.random() * posts.length);
 
+    const handlePageChange = (val) => {
+        setPage(val);
+
+        console.log(val);
+    };
 
   if (posts.length < 1)
     return  (
@@ -48,6 +53,13 @@ const Home = () => {
               {posts?.map((post,index) => (
                   <Card key={post?._id} post={post} index={index} />
               ))}
+
+                <div className='w-full flex items-center justify-center'>
+                    <Pagination
+                        totalPages={numOfPages}
+                        onPageChange={handlePageChange}
+                    />
+                </div>
             </div>
           </div>
         </div>
