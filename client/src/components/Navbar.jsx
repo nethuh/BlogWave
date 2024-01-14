@@ -22,7 +22,13 @@ function getInitials(fullName) {
     return initialsStr;
 }
 
+const MobileMenu = ({ user, signOut }) => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+}
 
 const Navbar = () => {
     return (
