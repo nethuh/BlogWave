@@ -50,7 +50,34 @@ const MobileMenu = ({ user, signOut }) => {
                     />
                 </svg>
             </button>
-
+            {isMenuOpen && (
+                <div className='fixed top-0 left-0 w-full h-fit bg-white dark:bg-[#020b19] z-50 flex flex-col py-10 items-center justify-center shadow-xl gap-8'>
+                    <Logo/>
+                    <ul className='flex flex-col gap-4 text-base text-black dark:text-gray-300'>
+                        <li className={toggleMenu}>
+                            <Link to='/'>Home</Link>
+                        </li>
+                        <li onClick={toggleMenu}>
+                            <Link to='/'>Contact</Link>
+                        </li>
+                        <li onClick={toggleMenu}>
+                            <Link to='/'>About</Link>
+                        </li>
+                    </ul>
+                    <div className='flex gap-2 items-center'>
+                        {user?.token ? (
+                            <div className='w-full flex  flex-col items-center justify-center '>
+                                <div className='flex gap-1 items-center mb-5'>
+                                    {user?.user.image ? (
+                                        <img
+                                            src={user?.user.image}
+                                            alt='Profile'
+                                            className='w-8 h-8 rounded-full'
+                                        />
+                        )}
+                    </div>
+                </div>
+            )}
 
         </div>
     )
