@@ -74,6 +74,23 @@ const MobileMenu = ({ user, signOut }) => {
                                             alt='Profile'
                                             className='w-8 h-8 rounded-full'
                                         />
+                                    ) : (
+                                        <span className='text-white w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center'>
+                      {getInitials(user?.user.name)}
+                    </span>
+                                    )}
+                                    <span className='font-medium text-black dark:text-gray-500'>
+                    {user?.user.name}
+                  </span>
+                                </div>
+
+                                <button
+                                    className='bg-black dark:bg-rose-600 text-white dark:text-white px-8 py-1.5 rounded-full text-center outline-none'
+                                    onClick={() => signOut()}
+                                >
+                                    Logout
+                                </button>
+                            </div>
                         )}
                     </div>
                 </div>
