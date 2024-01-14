@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { AiOutlineClose } from "react-icons/ai";
+import React, {useState} from "react";
+import {AiOutlineClose} from "react-icons/ai";
 import {
     FaFacebook,
     FaInstagram,
     FaTwitterSquare,
     FaYoutube,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import useStore from "../store";
 import Button from "./Button";
 import Logo from "./Logo";
@@ -22,19 +22,19 @@ function getInitials(fullName) {
     return initialsStr;
 }
 
-const MobileMenu = ({ user, signOut }) => {
+const MobileMenu = ({user, signOut}) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    return(
+    return (
         <div className='flex'>
             <button
                 onClick={toggleMenu}
                 className='lg:hidden p-2 text-gray-600 hover:text-gray-800'
-                >
+            >
                 <svg
                     xmlns='http://www.w3.org/2000/svg'
                     className='h-6 w-6'
@@ -51,7 +51,8 @@ const MobileMenu = ({ user, signOut }) => {
                 </svg>
             </button>
             {isMenuOpen && (
-                <div className='fixed top-0 left-0 w-full h-fit bg-white dark:bg-[#020b19] z-50 flex flex-col py-10 items-center justify-center shadow-xl gap-8'>
+                <div
+                    className='fixed top-0 left-0 w-full h-fit bg-white dark:bg-[#020b19] z-50 flex flex-col py-10 items-center justify-center shadow-xl gap-8'>
                     <Logo/>
                     <ul className='flex flex-col gap-4 text-base text-black dark:text-gray-300'>
                         <li className={toggleMenu}>
@@ -75,7 +76,8 @@ const MobileMenu = ({ user, signOut }) => {
                                             className='w-8 h-8 rounded-full'
                                         />
                                     ) : (
-                                        <span className='text-white w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center'>
+                                        <span
+                                            className='text-white w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center'>
                       {getInitials(user?.user.name)}
                     </span>
                                     )}
@@ -91,6 +93,13 @@ const MobileMenu = ({ user, signOut }) => {
                                     Logout
                                 </button>
                             </div>
+                        ) : (
+                            <Link to='/sign-in'>
+                                <Button
+                                    label='Sign in'
+                                    styles='flex items-center justify-center bg-black dark:bg-rose-600 text-white dark:text-white text-white px-4 py-1.5 rounded-full'
+                                />
+                            </Link>
                         )}
                     </div>
                 </div>
