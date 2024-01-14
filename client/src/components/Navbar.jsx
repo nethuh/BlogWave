@@ -102,12 +102,22 @@ const MobileMenu = ({user, signOut}) => {
                             </Link>
                         )}
                     </div>
+
+
+                    {/* theme switch */}
+                    <ThemeSwitch />
+
+                    <span
+                        className='cursor-pointer text-xl font-semibold dark:text-white'
+                        onClick={toggleMenu}
+                    >
+            <AiOutlineClose />
+          </span>
                 </div>
             )}
-
         </div>
-    )
-}
+    );
+};
 
 const Navbar = () => {
     return (
