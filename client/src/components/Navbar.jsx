@@ -105,13 +105,13 @@ const MobileMenu = ({user, signOut}) => {
 
 
                     {/* theme switch */}
-                    <ThemeSwitch />
+                    <ThemeSwitch/>
 
                     <span
                         className='cursor-pointer text-xl font-semibold dark:text-white'
                         onClick={toggleMenu}
                     >
-            <AiOutlineClose />
+            <AiOutlineClose/>
           </span>
                 </div>
             )}
@@ -120,7 +120,7 @@ const MobileMenu = ({user, signOut}) => {
 };
 
 const Navbar = () => {
-    const { user, signOut } = useStore();
+    const {user, signOut} = useStore();
     const [showProfile, setShowProfile] = useState(false);
 
     const handleSignOut = () => {
@@ -145,7 +145,42 @@ const Navbar = () => {
                     <FaTwitterSquare/>
                 </Link>
             </div>
-        </nav>
-    );
+
+            <Logo/>
+            <div className='hidden md:flex gap-14 items-center'>
+                <ul className='flex gap-8 text-base text-black dark:text-white'>
+                    <Link to='/'>Home</Link>
+                    <Link to='/'>Contact</Link>
+                    <Link to='/'>About</Link>
+                </ul>
+
+                {/* theme switch */}
+                <ThemeSwitch/>
+
+                <div className='flex gap-2 items-center cursor-pointer'>
+                    {user?.token ? (
+                        <div
+                            className='relative'
+                            onClick={() => setShowProfile((prev) => !prev)}>
+
+                            <div className='flex gap-1 items-center cursor-pointer'>
+                                {user?.user.image ? (
+                                    <img
+                                        src={user?.user.image}
+                                        alt='Profile'
+                                        className='w-8 h-8 rounded-full'
+                                    />
+                                ) : (
+                                    <span className='text-white w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center'>
+                                        {getInitials(user?.user.name)}
+                                    </span>
+                                )}
+
+                            </div>
+                            )}
+                        </div>
+                        </div>
+                        </nav>
+                        );
 };
 export default Navbar;
