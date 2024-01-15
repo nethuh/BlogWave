@@ -84,9 +84,17 @@ const BlogDetails = () => {
             {/* COMMENTS SECTION */}
             <div className='w-full'>{<PostComments postId={id} />}</div>
           </div>
+
+          {/* RIGHT */}
+          <div className='w-full md:w-1/4 flex flex-col gap-y-12'>
+            {/* POPULAR POSTS */}
+            <PopularPosts posts={popular?.posts}/>
+
+            {/* POPULAR WRITERS */}
+            <PopularWriters data={popular?.writers}/>
+          </div>
         </div>
       </div>
-
   );
 };
 
