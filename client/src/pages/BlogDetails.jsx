@@ -69,7 +69,22 @@ const BlogDetails = () => {
           />
         </div>
 
+        <div className='w-full flex flex-col md:flex-row gapx-10 2xl:gap-x-28 mt-10'>
+          {/* LEFT */}
+          <div className='w-full md:w-2/3 flex flex-col text-black dark:text-gray-500'>
+            {post?.desc && (
+                <Markdown
+                  options={{wrapper: "article" }}
+                  className='leading-[3rem] text-base 2xl:text-[20px]'
+                >
+                  {post?.desc}
+                </Markdown>
+            )}
 
+            {/* COMMENTS SECTION */}
+            <div className='w-full'>{<PostComments postId={id} />}</div>
+          </div>
+        </div>
       </div>
 
   );
