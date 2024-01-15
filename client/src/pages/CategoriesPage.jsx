@@ -13,7 +13,13 @@ const CategoriesPage = () => {
     console.log(val);
   }
   return (
-      <div>CategoriesPage</div>
+      <div className='px-0 2xl:px-20'>
+        <div className='py-5'>
+          <h2 className='text-4xl 2xl:text-5xl font-semibold text-slate-800 dark:text-white'>
+            {query}
+          </h2>
+        </div>
+      </div>
   );
 };
 
