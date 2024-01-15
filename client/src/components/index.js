@@ -10,6 +10,7 @@ import PopularWriters from "./PopularWriters";
 import PopularPosts from "./PopularPosts";
 import Navbar from "./Navbar";
 import PostComments from "./PostComments";
+import Footer from "./Footer";
 export {
-    Button, Loading,Logo, Divider,Inputbox,Banner,Card,Pagination, PopularWriters, PopularPosts , Navbar , PostComments
+    Button, Loading,Logo, Divider,Inputbox,Banner,Card,Pagination, PopularWriters, PopularPosts , Navbar , PostComments ,Footer
 };
