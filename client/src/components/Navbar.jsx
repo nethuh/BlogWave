@@ -120,6 +120,15 @@ const MobileMenu = ({user, signOut}) => {
 };
 
 const Navbar = () => {
+    const { user, signOut } = useStore();
+    const [showProfile, setShowProfile] = useState(false);
+
+    const handleSignOut = () => {
+        localStorage.removeItem("user");
+        signOut();
+    };
+
+    console.log(user);
     return (
         <div></div>
     );
