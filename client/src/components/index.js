@@ -9,6 +9,7 @@ import Pagination from "./Pagination";
 import PopularWriters from "./PopularWriters";
 import PopularPosts from "./PopularPosts";
 import Navbar from "./Navbar";
+import PostComments from "./PostComments";
 export {
-    Button, Loading,Logo, Divider,Inputbox,Banner,Card,Pagination, PopularWriters, PopularPosts , Navbar
+    Button, Loading,Logo, Divider,Inputbox,Banner,Card,Pagination, PopularWriters, PopularPosts , Navbar , PostComments
 };
