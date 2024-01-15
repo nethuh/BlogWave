@@ -1,15 +1,14 @@
 import Markdown from "markdown-to-jsx";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { PopularPosts, PopularWriters, PostComments } from "../components";
 import useStore from "../store";
 import { popular, posts } from "../utils/dummyData";
 
-
 const BlogDetails = () => {
-  const {setIsLoading} = useStore();
+  const { setIsLoading } = useStore();
 
-  const {id} = useParams();
+  const { id } = useParams();
   const [post, setPost] = useState(posts[1]);
 
   useEffect(() => {
