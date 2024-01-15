@@ -171,16 +171,42 @@ const Navbar = () => {
                                         className='w-8 h-8 rounded-full'
                                     />
                                 ) : (
-                                    <span className='text-white w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center'>
+                                    <span
+                                        className='text-white w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center'>
                                         {getInitials(user?.user.name)}
                                     </span>
                                 )}
-
+                                <span className='font-medium text-black dark:text-gray-500'>
+                  {user?.user?.name?.split(" ")[0]}
+                </span>
                             </div>
+
+                            {showProfile && (
+                                <div className='absolute bg-white dark:bg-[#2f2d30] py-6 px-6 flex flex-col shadow-2xl z-50 right-0 gap-3 rounded'>
+                                    <span className='dark:text-white'>Profile</span>
+                                    <span
+                                        className='border-t border-slate-300 text-rose-700'
+                                        onClick={handleSignOut}>
+                                        Logout
+                                    </span>
+                                </div>
                             )}
                         </div>
-                        </div>
-                        </nav>
-                        );
+                    ) : (
+                        <Link to='/sign-in'>
+                            <Button
+                                label='Sign in'
+                                styles='flex items-center justify-center bg-black dark:bg-rose-600 text-white dark:text-white px-4 py-1.5 rounded-full'
+                            />
+
+                        </Link>
+                    )}
+                </div>
+            </div>
+            <div className='block md:hidden'>
+                <MobileMenu user={user} signOut={handleSignOut}/>
+            </div>
+        </nav>
+    );
 };
 export default Navbar;
