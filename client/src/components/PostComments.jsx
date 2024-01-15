@@ -26,7 +26,17 @@ const PostComments = ({ postId }) => {
         );
 
     return (
-        <div></div>
+        <div className='w-full px-0 md:px-10 py-8 2xl:px-20'>
+            <div className='w-full flex flex-col-reverse md:flex-row gap-2 gap-y-5 items-center'>
+                <div className='w-full md:w-1/2 flex flex-col gap-8'>
+                    <h1 className='text-3xl md:text-5xl font-bold text-slate-800 dark:text-white'>
+                        {post?.title}
+                    </h1>
+
+
+                </div>
+            </div>
+        </div>
     );
 };
 
