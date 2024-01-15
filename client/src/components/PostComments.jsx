@@ -69,14 +69,28 @@ const PostComments = ({postId}) => {
                                         {el?.user?.name}
                                     </p>
                                     <span className='text-slate-700 text-xs italic'>
-                    {new Date(el?.createdAt).toDateString()}
-                  </span>
+                                      {new Date(el?.createdAt).toDateString()}
+                                    </span>
+                                </div>
+                                <div className='flex flex-col gap-2'>
+                                    <span className='text-sm'>{el?.desc}</span>
+
+                                    {user?.user?._id === el?.user?._id && (
+                                        <span
+                                            className='text-base text-red-600 cursor-pointer'
+                                            onClick={() => handleDeleteComment(el?._id)}
+                                        >
+                                            Delete
+                                            </span>
+                                    )}
                                 </div>
                             </div>
                         </div>
                     ))
                 )}
             </div>
+
+            <Toaster richColors/>
         </div>
     )
 };
