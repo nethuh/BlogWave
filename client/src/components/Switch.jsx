@@ -12,7 +12,13 @@ const ThemeSwitch = () => {
         localStorage.setItem("theme", newTheme);
     };
     return (
-        <div></div>
+        <div className={`switch ${isDarkMode ? "light" : "dark"}`}
+             onClick={toggleTheme}
+        >
+            <div className={`ball ${isDarkMode ? "dark" : "light"}`}>
+
+            </div>
+        </div>
     );
 };
 export default ThemeSwitch;
