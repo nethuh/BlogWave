@@ -52,12 +52,21 @@ const WriterPage = () => {
                                 </p>
                                 <span className='text-gray-500'>Followers</span>
                             </div>
+
+                            <div className='flex flex-col items-center'>
+                                <p className='text-gray-300 text-2xl font-semibold'>
+                                    {formatNumber(posts?.length ?? 0)}
+                                </p>
+                                <span className='text-gray-500'>Posts</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-        );
+
+</div>
+)
+    ;
 };
 
 export default WriterPage;
