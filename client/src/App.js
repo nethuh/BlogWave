@@ -1,7 +1,7 @@
 import {Routes, Route, Outlet} from "react-router-dom"
 import {BlogDetails, CategoriesPage, Home, WriterPage, SignupPage, LoginPage} from "./pages";
 import Loading from "./components/Loading";
-import { Navbar } from "./components";
+import { Footer,Navbar } from "./components";
 function Layout() {
     return (
         <div className="w-full flex flex-col
@@ -11,7 +11,7 @@ function Layout() {
             <div className='flex-1'>
                 <Outlet/>
             </div>
-            {/*<Footer/>*/}
+            <Footer/>
         </div>
     );
 }
