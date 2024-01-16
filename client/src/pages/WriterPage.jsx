@@ -60,8 +60,27 @@ const WriterPage = () => {
                                 <span className='text-gray-500'>Posts</span>
                             </div>
                         </div>
+
+                        {user?.token && (
+                            <div>
+                                {!followerIds?.includes(user?._id) ? (
+                                    <Button
+                                        label='Follow'
+                                        onClick={() => {}}
+                                        styles='text-slate-800 text-semibold md:-mt-4 px-6 py-1 rounded-full bg-white'
+                                    />
+                                ) : (
+                                    <div className='flex items-center justify-center gap-2 text-white text-semibold md:-mt-4 px-6 py-1 rounded-full border'>
+                                        <span>Following</span>
+                                        <FaUserCheck/>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
+
+
             </div>
 
 </div>
