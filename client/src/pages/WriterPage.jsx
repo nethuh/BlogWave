@@ -14,7 +14,25 @@ import { formatNumber } from "../utils";
 import { popular, posts, writer } from "../utils/dummyData";
 
 const WriterPage = () => {
-  return <div>WriterPage</div>;
+
+  const { user } = useStore();
+
+  const { id } = useParams();
+  const numOfPages = 4;
+  const [page, setPage] = useState(0);
+
+  const handlePageChange = (val) => {
+    setPage(val);
+
+    console.log(val);
+  };
+
+  const followerIds = writer.followers.map((f) => fetch.followerId);
+
+  if (!writer)
+    return (
+      <div>WriterPage</div>
+  );
 };
 
 export default WriterPage;
