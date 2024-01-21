@@ -52,7 +52,23 @@ export const sendVerificationEmail = async (user, res, token) => {
             expiresAt: Date.now() + 120000,
         });
 
-
+        if (newVerifiedEmail) {
+            transporter
+                .sendMail(mailOptions)
+                .then(() => {
+                    res.status(201).send({
+                        success: "PENDING",
+                        message:
+                            "OTP has been sent to your account. Check your email and verify your email.",
+                        user,
+                        token,
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.status(404).json({ message: "Something went wrong" });
+                });
+        }
     } catch (error) {
         console.log(error);
         res.status(404).json({message: "Something went wrong"});

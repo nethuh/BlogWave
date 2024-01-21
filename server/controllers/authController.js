@@ -1,5 +1,6 @@
 import Users from "../models/userModel.js";
 import { compareString, createJWT, hashString } from "../utils/index.js";
+import {sendVerificationEmail} from "../utils/sendEmail.js";
 
 export const register = async (req, res, next) => {
     try {
@@ -42,6 +43,17 @@ export const register = async (req, res, next) => {
 
         const token = createJWT(user?._id);
 
+        //send email verification if account type is writer
+        if (accountType == "Writer"){
+            sendVerificationEmail(user, res, token);
+        }else {
+            res.status(201).json({
+                success: true,
+                message: "Account created successfully",
+                user,
+                token,
+            });
+        }
 
     }catch (error) {
         console.log(error);
