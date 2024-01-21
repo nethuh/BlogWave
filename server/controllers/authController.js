@@ -71,6 +71,26 @@ export const googleSignUp = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
     try {
+        const { email,password } = req.body;
+
+        //validation
+        if (!email) {
+            return next("Please Provide User Credentials");
+        }
+
+        // find user by email
+        const user = await Users.findOne({ email }).select("+password");
+
+        if (!user) {
+            return next("Invalid email or password");
+        }
+
+        // Google account signed in
+        if (!password && user?.provider === "Google"){
+            const token = createJWT(user?._id);
+
+
+        }
     }catch (error) {
         console.log(error);
         res.status(404).json({ message: error.message });
