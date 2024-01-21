@@ -44,7 +44,7 @@ export const register = async (req, res, next) => {
         const token = createJWT(user?._id);
 
         //send email verification if account type is writer
-        if (accountType == "Writer"){
+        if (accountType === "Writer"){
             sendVerificationEmail(user, res, token);
         }else {
             res.status(201).json({
