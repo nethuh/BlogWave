@@ -7,3 +7,7 @@ const followersSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
+
+const Followers = mongoose.model("Followers", followersSchema);
+
+export default Followers;
