@@ -1,5 +1,5 @@
 import Users from "../models/userModel.js";
-import { compareString, createJWT, hashString } from "../utils/index.js";
+import {compareString, createJWT, hashString} from "../utils/index.js";
 import {sendVerificationEmail} from "../utils/sendEmail.js";
 
 export const register = async (req, res, next) => {
@@ -22,7 +22,7 @@ export const register = async (req, res, next) => {
         if (accountType === "Writer" && !image)
             return next("Please provide profile picture");
 
-        const userExist = await Users.findOne({ email });
+        const userExist = await Users.findOne({email});
 
         if (userExist) {
             return next("Email Address already exists. Try Login");
@@ -44,9 +44,9 @@ export const register = async (req, res, next) => {
         const token = createJWT(user?._id);
 
         //send email verification if account type is writer
-        if (accountType === "Writer"){
+        if (accountType === "Writer") {
             sendVerificationEmail(user, res, token);
-        }else {
+        } else {
             res.status(201).json({
                 success: true,
                 message: "Account created successfully",
@@ -55,23 +55,23 @@ export const register = async (req, res, next) => {
             });
         }
 
-    }catch (error) {
+    } catch (error) {
         console.log(error);
-        res.status(404).json({ message: error.message });
+        res.status(404).json({message: error.message});
     }
 };
 
 export const googleSignUp = async (req, res, next) => {
     try {
-    }catch (error) {
+    } catch (error) {
         console.log(error);
-        res.status(404).json({ message: error.message });
+        res.status(404).json({message: error.message});
     }
 };
 
 export const login = async (req, res, next) => {
     try {
-        const { email,password } = req.body;
+        const {email, password} = req.body;
 
         //validation
         if (!email) {
@@ -79,21 +79,48 @@ export const login = async (req, res, next) => {
         }
 
         // find user by email
-        const user = await Users.findOne({ email }).select("+password");
+        const user = await Users.findOne({email}).select("+password");
 
         if (!user) {
             return next("Invalid email or password");
         }
 
         // Google account signed in
-        if (!password && user?.provider === "Google"){
+        if (!password && user?.provider === "Google") {
             const token = createJWT(user?._id);
 
-
+            return res.status(201).json({
+                success: true,
+                message: "Login successfully",
+                user,
+                token,
+            });
         }
-    }catch (error) {
+
+        // compare password
+        const isMatch = await compareString(password, user?.password);
+
+        if (!isMatch) {
+            return next("Invalid email or password");
+        }
+
+        if (user?.accountType === "Writer" && !user?.emailVerified) {
+            return next("Please verify your email address.");
+        }
+
+        user.password = undefined;
+
+        const token = createJWT(user?._id);
+
+        res.status(201).json({
+            success: true,
+            message: "Login successfully",
+            user,
+            token,
+        });
+    } catch (error) {
         console.log(error);
-        res.status(404).json({ message: error.message });
+        res.status(404).json({success: "failed", message: error.message});
     }
 };
 
