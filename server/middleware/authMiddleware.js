@@ -19,7 +19,11 @@ const authMiddleware = async (req, res, next) => {
         };
 
         next();
-    }catch (error) {
-
+    } catch (error) {
+        console.log(error);
+        next("Authentication failed");
     }
-}
+};
+
+export default authMiddleware;
+
