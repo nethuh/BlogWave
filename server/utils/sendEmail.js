@@ -41,6 +41,8 @@ export const register = async (req, res, next) => {
         user.password = undefined;
 
         const token = createJWT(user?._id);
+
+
     }catch (error) {
         console.log(error);
         res.status(404).json({ message: error.message });
