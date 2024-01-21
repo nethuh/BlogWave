@@ -63,6 +63,33 @@ export const register = async (req, res, next) => {
 
 export const googleSignUp = async (req, res, next) => {
     try {
+        const {name, email, image, emailVerified} = req.body;
+
+        const userExist = await Users.findOne({email});
+
+        if (userExist) {
+            next("Email Address already exists. Try Login");
+            return;
+        }
+
+        const user = await Users.create({
+            name,
+            email,
+            image,
+            provider: "Google",
+            emailVerified,
+        });
+
+        user.password = undefined;
+
+        const token = createJWT(user?._id);
+
+        res.status(201).json({
+            success: true,
+            message: "Account created successfully",
+            user,
+            token,
+        });
     } catch (error) {
         console.log(error);
         res.status(404).json({message: error.message});
