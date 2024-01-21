@@ -7,7 +7,12 @@ const postSchema = new mongoose.Schema(
         desc: { type: String },
         img: { type: String },
         cat: { type: String },
+        views: [{ type: Schema.Types.ObjectId, ref: "Views" }],
+        user: { type: Schema.Types.ObjectId, ref: "Users"},
+        comments: [{ type: Schema.Types.ObjectId, ref: "Comments" }],
+        status: { type: Boolean, default: true },
     },
+    { timestamps: true }
 );
 
 const Post = mongoose.model("Posts", postSchema);
