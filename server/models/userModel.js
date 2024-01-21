@@ -11,5 +11,10 @@ const userSchema = new mongoose.Schema(
         provider: {type: String, default: "Nethmi"},
         followers: [{ type: Schema.Types.ObjectId, ref: "Followers" }],
 
-    }
-)
+    },
+    { timestamps: true }
+);
+
+const Users = mongoose.model("Users",userSchema);
+
+export default Users;
