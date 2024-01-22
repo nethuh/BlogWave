@@ -41,4 +41,23 @@ export const OPTVerification = async (req, res, next) => {
     }
 };
 
+export const resendOTP = async (req, res, next) => {
+    try {
+        const { id } = req.params;
 
+        await Verification.findOneAndDelete({ userId: id });
+
+        const user = await Users.findById(id);
+
+        user.password = undefined;
+
+        const token = createJWT(user?._id);
+
+        if (user?.accountType === "Writer") {
+            sendVerificationEmail(user, res, token);
+        } else res.status(404).json({ message: "Something went wrong" });
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: "Something went wrong" });
+    }
+};
