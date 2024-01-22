@@ -270,7 +270,22 @@ export const getComments = async (req, res, next) => {
 }
 
 export const deletePost = async (req, res, next) => {
-}
+    try {
+        const { userId } = req.body.user;
+        const { id } = req.params;
+
+        await Posts.findOneAndDelete({ _id: id, user: userId });
+
+        res.status(200).json({
+            success: true,
+            message: "Deleted successfully",
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: error.message });
+    }
+};
+
 
 export const deleteComment = async (req, res, next) => {
     try {
