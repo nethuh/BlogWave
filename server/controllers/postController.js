@@ -174,7 +174,35 @@ export const getPostContent = async (req, res, next) => {
 };
 
 export const createPost = async (req, res, next) => {
-}
+    try {
+        const { userId } = req.body.user;
+        const { desc, img, title, slug, cat } = req.body;
+
+        if (!(desc || img || title || cat)) {
+            return next(
+                "All fields are required. Please enter a description, title, category and select image."
+            );
+        }
+
+        const post = await Posts.create({
+            user: userId,
+            desc,
+            img,
+            title,
+            slug,
+            cat,
+        });
+
+        res.status(200).json({
+            sucess: true,
+            message: "Post created successfully",
+            data: post,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: error.message });
+    }
+};
 
 export const commentPost = async (req, res, next) => {
 }
