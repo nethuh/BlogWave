@@ -205,7 +205,38 @@ export const createPost = async (req, res, next) => {
 };
 
 export const commentPost = async (req, res, next) => {
-}
+    try {
+        const { desc } = req.body;
+        const { userId } = req.body.user;
+        const { id } = req.params;
+
+        if (desc === null) {
+            return res.status(404).json({ message: "Comment is required." });
+        }
+
+        const newComment = new Comments({ desc, user: userId, post: id });
+
+        await newComment.save();
+
+        //updating the post with the comments id
+        const post = await Posts.findById(id);
+
+        post.comments.push(newComment._id);
+
+        await Posts.findByIdAndUpdate(id, post, {
+            new: true,
+        });
+
+        res.status(201).json({
+            success: true,
+            message: "Comment published successfully",
+            newComment,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: error.message });
+    }
+};
 
 export const updatePost = async (req, res, next) => {
 }
