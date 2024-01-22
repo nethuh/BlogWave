@@ -13,11 +13,11 @@ export const OPTVerification = async (req, res, next) => {
         const {expiresAt, token} = result;
 
         // token has expired, delete token
-        if (expiresAt < Date.now()){
-            await Verification.findOneAndDelete({ userId });
+        if (expiresAt < Date.now()) {
+            await Verification.findOneAndDelete({userId});
 
             const message = "Verification token has expired.";
-            res.status(404).json({ message });
+            res.status(404).json({message});
         } else {
             const isMatch = await compareString(otp, token);
 
@@ -28,11 +28,11 @@ export const OPTVerification = async (req, res, next) => {
                 ]);
 
                 const message = "Email verified successfully";
-                res.status(200).json({ message });
+                res.status(200).json({message});
 
             } else {
                 const message = "Verification failed or link is invalid";
-                res.status(404).json({ message });
+                res.status(404).json({message});
             }
         }
     } catch (error) {
@@ -43,9 +43,9 @@ export const OPTVerification = async (req, res, next) => {
 
 export const resendOTP = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const {id} = req.params;
 
-        await Verification.findOneAndDelete({ userId: id });
+        await Verification.findOneAndDelete({userId: id});
 
         const user = await Users.findById(id);
 
@@ -55,19 +55,19 @@ export const resendOTP = async (req, res, next) => {
 
         if (user?.accountType === "Writer") {
             sendVerificationEmail(user, res, token);
-        } else res.status(404).json({ message: "Something went wrong" });
+        } else res.status(404).json({message: "Something went wrong"});
     } catch (error) {
         console.log(error);
-        res.status(404).json({ message: "Something went wrong" });
+        res.status(404).json({message: "Something went wrong"});
     }
 };
 
 export const followWritter = async (req, res, next) => {
     try {
         const followerId = req.body.user.userId;
-        const { id } = req.params;
+        const {id} = req.params;
 
-        const checks = await Followers.findOne({ followerId });
+        const checks = await Followers.findOne({followerId});
 
         if (checks)
             return res.status(201).json({
@@ -84,7 +84,7 @@ export const followWritter = async (req, res, next) => {
 
         writer?.followers?.push(newFollower?._id);
 
-        await Users.findByIdAndUpdate(id, writer, { new: true });
+        await Users.findByIdAndUpdate(id, writer, {new: true});
 
         res.status(201).json({
             success: true,
@@ -92,6 +92,50 @@ export const followWritter = async (req, res, next) => {
         });
     } catch (error) {
         console.log(error);
-        res.status(404).json({ message: error.message });
+        res.status(404).json({message: error.message});
+    }
+};
+
+export const updateUser = async (req, res, next) => {
+    try {
+        const {userId} = req.body.user;
+        const {firstName, lastName, image} = req.body;
+
+        if (!(firstName || lastName)) {
+            return next("Please provide all required fields");
+        }
+
+        const updateUser = {
+            name: firstName + " " + lastName,
+            image,
+            _id: userId,
+        };
+        const user = await Users.findByIdAndUpdate(userId, updateUser, {
+            new: true,
+        });
+
+        const token = createJWT(user?._id);
+
+        user.password = undefined;
+
+        res.status(200).json({
+            success: true,
+            message: "User updated successfully",
+            user,
+            token,
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({message: error.message});
+    }
+};
+
+export const getWriter = async (req, res, next) => {
+    try {
+
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({message: "Something went wrong"});
     }
 };
