@@ -273,4 +273,26 @@ export const deletePost = async (req, res, next) => {
 }
 
 export const deleteComment = async (req, res, next) => {
-}
+    try {
+        const { id, postId } = req.params;
+
+        await Comments.findByIdAndDelete(id);
+
+        //removing commetn id from post
+        const result = await Posts.updateOne(
+            { _id: postId },
+            { $pull: { comments: id } }
+        );
+
+        if (result.modifiedCount > 0) {
+            res
+                .status(200)
+                .json({ success: true, message: "Comment removed successfully" });
+        } else {
+            res.status(404).json({ message: "Post or comment not found" });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: error.message });
+    }
+};
