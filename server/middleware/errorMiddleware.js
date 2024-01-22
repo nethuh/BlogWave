@@ -15,4 +15,19 @@ const errorMiddleware = (err, req, res, next) => {
             .map((el) => el.message)
             .join(",");
     }
-}
+
+    // Duplicate key error
+    if (err?.code && err?.code === 11000){
+        defaultError.statusCode = 409;
+        defaultError.message = `${Object.keys(err.keyPattern).join(
+            ", "
+        )} must be unique`;
+    }
+
+    res?.status(defaultError.statusCode).json({
+        success: defaultError.success,
+        message: defaultError.message,
+    });
+};
+
+export default errorMiddleware;
