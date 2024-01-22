@@ -6,7 +6,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import dbConnection from "./dbConfig/index.js";
 
-// import errorMiddleware from "./middleware/errorMiddleware.js";
+import errorMiddleware from "./middleware/errorMiddleware.js";
 import routes from "./routes/index.js";
 
 dotenv.config();
@@ -26,8 +26,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
 app.use(routes);
-//
-// app.use(errorMiddleware);
+
+app.use(errorMiddleware);
 
 app.listen(PORT, () => {
     console.log("Server running of port " + PORT);
