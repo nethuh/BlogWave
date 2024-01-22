@@ -61,3 +61,37 @@ export const resendOTP = async (req, res, next) => {
         res.status(404).json({ message: "Something went wrong" });
     }
 };
+
+export const followWritter = async (req, res, next) => {
+    try {
+        const followerId = req.body.user.userId;
+        const { id } = req.params;
+
+        const checks = await Followers.findOne({ followerId });
+
+        if (checks)
+            return res.status(201).json({
+                success: false,
+                message: "You're already following this writer.",
+            });
+
+        const writer = await Users.findById(id);
+
+        const newFollower = await Followers.create({
+            followerId,
+            writerId: id,
+        });
+
+        writer?.followers?.push(newFollower?._id);
+
+        await Users.findByIdAndUpdate(id, writer, { new: true });
+
+        res.status(201).json({
+            success: true,
+            message: "You're now following writer " + writer?.name,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: error.message });
+    }
+};
