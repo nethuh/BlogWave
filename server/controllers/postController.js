@@ -18,7 +18,7 @@ try {
     const startDate = new Date();
     startDate.setDate(currentDate.getDate() - numofDays);
 
-    const totalPost = await Post.find({
+    const totalPosts = await Post.find({
         user: userId,
         createdAt: { $gte: startDate, $lte: currentDate },
     }).countDocuments();
@@ -52,6 +52,51 @@ try {
         { $sort: { _id: 1 } },
     ]);
 
+    const followersStats = await Followers.aggregate([
+        {
+            $match: {
+                writerId: new mongoose.Types.ObjectId(userId),
+                createdAt: { $gte: startDate, $lte: currentDate },
+            },
+        },
+        {
+            $group: {
+                _id: {
+                    $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+                },
+                Total: { $sum: 1 },
+            },
+        },
+        { $sort: { _id: 1 } },
+    ]);
+
+    const last5Followers = await Users.findById(userId).populate({
+        path: "followers",
+        options: { sort: { _id: -1 } },
+        perDocumentLimit: 5,
+        populate: {
+            path: "followerId",
+            select: "name email image accountType followers -password",
+        },
+    });
+
+    const last5Posts = await  Post.find({ user: userId })
+
+        .limit(5)
+        .sort({ _id: -1 });
+
+    res.status(200).json({
+        success: true,
+        message: "Data loaded successfully",
+        totalPosts,
+        totalViews,
+        totalWriters,
+        followers: totalFollowers?.followers?.length,
+        viewStats,
+        followersStats,
+        last5Followers: last5Followers?.followers,
+        last5Posts,
+    });
 } catch (error) {
     console.log(error);
     res.status(404).json({ message: error.message });
