@@ -304,8 +304,35 @@ export const getPosts = async (req, res, next) => {
 };
 
 export const getPopularContents = async (req, res, next) => {
-}
-
+    try {
+        const posts = await Posts.aggregate([
+            {
+                $match: {
+                    status: true,
+                },
+            },
+            {
+                $project: {
+                    title: 1,
+                    slug: 1,
+                    img: 1,
+                    cat: 1,
+                    views: { $size: "$views" },
+                    createdAt: 1,
+                },
+            },
+            {
+                $sort: { views: -1 },
+            },
+            {
+                $limit: 5,
+            },
+        ]);
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: error.message });
+    }
+};
 export const getPost = async (req, res, next) => {
 }
 
