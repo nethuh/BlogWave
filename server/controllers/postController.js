@@ -317,24 +317,78 @@ export const getPopularContents = async (req, res, next) => {
                     slug: 1,
                     img: 1,
                     cat: 1,
-                    views: { $size: "$views" },
+                    views: {$size: "$views"},
                     createdAt: 1,
                 },
             },
             {
-                $sort: { views: -1 },
+                $sort: {views: -1},
             },
             {
                 $limit: 5,
             },
         ]);
+
+        const writers = await Users.aggregate([
+            {
+                $match: {
+                    accountType: {$ne: "User"},
+                },
+            },
+            {
+                $project: {
+                    name: 1,
+                    image: 1,
+                    followers: {$size: "$followers"},
+                },
+            },
+            {
+                $sort: {followers: -1},
+            },
+            {
+                $limit: 5,
+            },
+        ]);
+
+        res.status(200).json({
+            success: true,
+            message: "Successful",
+            data: {posts, writers},
+        });
     } catch (error) {
         console.log(error);
-        res.status(404).json({ message: error.message });
+        res.status(404).json({message: error.message});
     }
 };
+
 export const getPost = async (req, res, next) => {
-}
+    try {
+        const { postId } = req.params;
+
+        const post = await Posts.findById(postId).populate({
+            path: "user",
+            select: "name image -password",
+        });
+
+        const newView = await Views.create({
+            user: post?.user,
+            post: postId,
+        });
+
+        post.views.push(newView?._id);
+
+        await Posts.findByIdAndUpdate(postId, post);
+
+        res.status(200).json({
+            success: true,
+            message: "Successful",
+            data: post,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({message: error.message});
+    }
+};
 
 export const getComments = async (req, res, next) => {
 }
