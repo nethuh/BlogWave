@@ -391,7 +391,26 @@ export const getPost = async (req, res, next) => {
 };
 
 export const getComments = async (req, res, next) => {
-}
+    try {
+        const { postId } = req.params;
+
+        const postComments = await Comments.find({ post: postId })
+            .populate({
+                path: "user",
+                select: "name image -password",
+            })
+            .sort({ _id: -1 });
+
+        res.status(200).json({
+            success: true,
+            message: "successfully",
+            data: postComments,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: error.message });
+    }
+};
 
 export const deletePost = async (req, res, next) => {
     try {
@@ -409,7 +428,6 @@ export const deletePost = async (req, res, next) => {
         res.status(404).json({message: error.message});
     }
 };
-
 
 export const deleteComment = async (req, res, next) => {
     try {
