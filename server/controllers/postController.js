@@ -152,7 +152,7 @@ export const getPostContent = async (req, res, next) => {
         const skip = (page - 1) * limit;
 
         //records count
-        const totalPost = await Posts.countDocuments({ user: userId });
+        const totalPost = await Posts.countDocuments({user: userId});
         const numOfPage = Math.ceil(totalPost / limit);
 
         queryResult = queryResult.skip(skip).limit(limit);
@@ -175,8 +175,8 @@ export const getPostContent = async (req, res, next) => {
 
 export const createPost = async (req, res, next) => {
     try {
-        const { userId } = req.body.user;
-        const { desc, img, title, slug, cat } = req.body;
+        const {userId} = req.body.user;
+        const {desc, img, title, slug, cat} = req.body;
 
         if (!(desc || img || title || cat)) {
             return next(
@@ -200,21 +200,21 @@ export const createPost = async (req, res, next) => {
         });
     } catch (error) {
         console.log(error);
-        res.status(404).json({ message: error.message });
+        res.status(404).json({message: error.message});
     }
 };
 
 export const commentPost = async (req, res, next) => {
     try {
-        const { desc } = req.body;
-        const { userId } = req.body.user;
-        const { id } = req.params;
+        const {desc} = req.body;
+        const {userId} = req.body.user;
+        const {id} = req.params;
 
         if (desc === null) {
-            return res.status(404).json({ message: "Comment is required." });
+            return res.status(404).json({message: "Comment is required."});
         }
 
-        const newComment = new Comments({ desc, user: userId, post: id });
+        const newComment = new Comments({desc, user: userId, post: id});
 
         await newComment.save();
 
@@ -234,16 +234,16 @@ export const commentPost = async (req, res, next) => {
         });
     } catch (error) {
         console.log(error);
-        res.status(404).json({ message: error.message });
+        res.status(404).json({message: error.message});
     }
 };
 
 export const updatePost = async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const { status } = req.body;
+        const {id} = req.params;
+        const {status} = req.body;
 
-        const post = await Posts.findByIdAndUpdate(id, { status }, { new: true });
+        const post = await Posts.findByIdAndUpdate(id, {status}, {new: true});
 
         res.status(200).json({
             sucess: true,
@@ -251,14 +251,57 @@ export const updatePost = async (req, res, next) => {
             data: post,
         });
     } catch (error) {
-    console.log(error);
-    res.status(404).json({ message: error.message });
-}
+        console.log(error);
+        res.status(404).json({message: error.message});
+    }
 };
 
-
 export const getPosts = async (req, res, next) => {
-}
+    try {
+        const {cat, writerId} = req.query;
+
+        let query = {status: true};
+
+        if (cat) {
+            query.cat = cat;
+        } else if (writerId) {
+            query.user = writerId;
+        }
+
+        let queryResult = Post.find(query)
+            .populate({
+                path: "user",
+                select: "name image -password",
+            })
+            .sort({_id: -1});
+        console.log(queryResult);
+        // pagination
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 5;
+        const skip = (page - 1) * limit;
+
+        //records count
+        const totalPost = await Posts.countDocuments(queryResult);
+
+        const numOfPage = Math.ceil(totalPost / limit);
+
+        queryResult = queryResult.skip(skip).limit(limit);
+
+        const posts = await queryResult;
+
+        res.status(200).json({
+            success: true,
+            totalPost,
+            data: posts,
+            page,
+            numOfPage,
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({message: error.message});
+    }
+};
 
 export const getPopularContents = async (req, res, next) => {
 }
@@ -271,10 +314,10 @@ export const getComments = async (req, res, next) => {
 
 export const deletePost = async (req, res, next) => {
     try {
-        const { userId } = req.body.user;
-        const { id } = req.params;
+        const {userId} = req.body.user;
+        const {id} = req.params;
 
-        await Posts.findOneAndDelete({ _id: id, user: userId });
+        await Posts.findOneAndDelete({_id: id, user: userId});
 
         res.status(200).json({
             success: true,
@@ -282,32 +325,32 @@ export const deletePost = async (req, res, next) => {
         });
     } catch (error) {
         console.log(error);
-        res.status(404).json({ message: error.message });
+        res.status(404).json({message: error.message});
     }
 };
 
 
 export const deleteComment = async (req, res, next) => {
     try {
-        const { id, postId } = req.params;
+        const {id, postId} = req.params;
 
         await Comments.findByIdAndDelete(id);
 
         //removing commetn id from post
         const result = await Posts.updateOne(
-            { _id: postId },
-            { $pull: { comments: id } }
+            {_id: postId},
+            {$pull: {comments: id}}
         );
 
         if (result.modifiedCount > 0) {
             res
                 .status(200)
-                .json({ success: true, message: "Comment removed successfully" });
+                .json({success: true, message: "Comment removed successfully"});
         } else {
-            res.status(404).json({ message: "Post or comment not found" });
+            res.status(404).json({message: "Post or comment not found"});
         }
     } catch (error) {
         console.log(error);
-        res.status(404).json({ message: error.message });
+        res.status(404).json({message: error.message});
     }
 };
